@@ -2,7 +2,7 @@ package uio.androidbootcamp.moviesapp.model.models
 
 import java.util.*
 
-class Movie (val id: Long, val posterPath: String, val name: String, val overview: String, val releaseDate: Date) {
+data class Movie (val id: Long = 0, val posterPath: String, val name: String, val overview: String, val releaseDate: Date = Date()) {
 
     constructor() : this(0,"","","", Date())
 
