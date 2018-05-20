@@ -65,10 +65,14 @@ abstract class BaseActivity<T : AppCompatActivity> : AppCompatActivity() {
                     if (implementingClass.simpleName != ActivitiesNames.MOVIESLISTACTIVITY.className) {
                         intent = Intent(this, MoviesListActivity::class.java)
                         startActivity(intent)
-                        finish()
                     }
                 }
-                R.id.action_find -> toast("Navigate to Find")
+                R.id.action_find -> {
+                    if (implementingClass.simpleName != ActivitiesNames.FINDMOVIESACTIVITY.className) {
+                        intent = Intent(this, FindMovieActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
             }
             drawer_layout.closeDrawer(GravityCompat.START)
             true
