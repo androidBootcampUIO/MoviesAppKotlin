@@ -17,7 +17,7 @@ class MoviePresenter(val view: View) : MoviePresenterOutput {
         view.showMovieInformation(movie)
     }
 
-    fun viewLoaded(){
+    fun viewLoaded() {
         view.setActionsToScreenElements()
     }
 }

@@ -12,9 +12,7 @@ class MoviesListActivity : BaseActivity<MoviesListActivity>() {
         setActionBarTitle(getString(R.string.list_movies))
     }
 
-    override fun isDrawerEnabled(): Boolean {
-        return true
-    }
+    override fun isDrawerEnabled(): Boolean = true
 
     override fun getImplementingTypeClass(): KClass<MoviesListActivity> {
         return MoviesListActivity::class

@@ -1,15 +1,15 @@
 package uio.androidbootcamp.moviesapp.view.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.drawer_layout.*
 import uio.androidbootcamp.moviesapp.R
+import uio.androidbootcamp.moviesapp.R.id.action_find
+import uio.androidbootcamp.moviesapp.R.id.action_list
 import uio.androidbootcamp.moviesapp.utils.ActivitiesNames
 import kotlin.reflect.KClass
 
@@ -40,16 +40,15 @@ abstract class BaseActivity<T : AppCompatActivity> : AppCompatActivity() {
                 drawer_layout,
                 toolbar,
                 R.string.drawer_close,
-                R.string.drawer_open
-        ) {
+                R.string.drawer_open) {
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
-                //                toast("Con este evento manejas lo que sucede cuando el drawer se cierra")
+                // toast("Con este evento manejas lo que sucede cuando el drawer se cierra")
             }
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                //                toast("Con este evento, manejas lo que sucede cuando el drawer se abre")
+                // toast("Con este evento, manejas lo que sucede cuando el drawer se abre")
             }
         }
 
@@ -57,18 +56,17 @@ abstract class BaseActivity<T : AppCompatActivity> : AppCompatActivity() {
         drawer_layout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
-
         this.navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
 
-                R.id.action_list -> {
-                    if (implementingClass.simpleName != ActivitiesNames.MOVIESLISTACTIVITY.className) {
+                action_list -> {
+                    if (implementingClass.simpleName != ActivitiesNames.MOVIES_LIST_ACTIVITY.className) {
                         intent = Intent(this, MoviesListActivity::class.java)
                         startActivity(intent)
                     }
                 }
-                R.id.action_find -> {
-                    if (implementingClass.simpleName != ActivitiesNames.FINDMOVIESACTIVITY.className) {
+                action_find -> {
+                    if (implementingClass.simpleName != ActivitiesNames.FIND_MOVIES_ACTIVITY.className) {
                         intent = Intent(this, FindMovieActivity::class.java)
                         startActivity(intent)
                     }
@@ -77,9 +75,5 @@ abstract class BaseActivity<T : AppCompatActivity> : AppCompatActivity() {
             drawer_layout.closeDrawer(GravityCompat.START)
             true
         }
-    }
-
-    fun Context.toast(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 }

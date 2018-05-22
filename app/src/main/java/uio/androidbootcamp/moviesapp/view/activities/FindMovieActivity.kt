@@ -6,6 +6,7 @@ import uio.androidbootcamp.moviesapp.R
 import uio.androidbootcamp.moviesapp.model.models.Movie
 import uio.androidbootcamp.moviesapp.presenter.MoviePresenter
 import uio.androidbootcamp.moviesapp.presenter.View
+import uio.androidbootcamp.moviesapp.utils.toast
 import kotlin.reflect.KClass
 
 class FindMovieActivity : BaseActivity<FindMovieActivity>(), View {
@@ -19,7 +20,7 @@ class FindMovieActivity : BaseActivity<FindMovieActivity>(), View {
         presenter.viewLoaded()
     }
 
-    override fun setActionsToScreenElements(){
+    override fun setActionsToScreenElements() {
         button_find_movie.setOnClickListener {
             presenter.findMovieByName(edit_text_movie_name.text.toString())
         }
