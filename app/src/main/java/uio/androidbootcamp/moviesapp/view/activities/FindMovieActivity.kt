@@ -9,8 +9,7 @@ import uio.androidbootcamp.moviesapp.presenter.View
 import uio.androidbootcamp.moviesapp.utils.toast
 import kotlin.reflect.KClass
 
-class FindMovieActivity : BaseActivity<FindMovieActivity>(), View {
-
+class FindMovieActivity : BaseActivity(), View {
     private val presenter = MoviePresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +33,7 @@ class FindMovieActivity : BaseActivity<FindMovieActivity>(), View {
         return true
     }
 
-    override fun getImplementingTypeClass(): KClass<FindMovieActivity> {
-        return FindMovieActivity::class
+    override fun getImplementingTypeClassName(): String {
+        return FindMovieActivity::class.java.simpleName
     }
 }

@@ -4,7 +4,7 @@ import android.os.Bundle
 import uio.androidbootcamp.moviesapp.R
 import kotlin.reflect.KClass
 
-class MoviesListActivity : BaseActivity<MoviesListActivity>() {
+class MoviesListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_movies_list)
@@ -14,7 +14,7 @@ class MoviesListActivity : BaseActivity<MoviesListActivity>() {
 
     override fun isDrawerEnabled(): Boolean = true
 
-    override fun getImplementingTypeClass(): KClass<MoviesListActivity> {
-        return MoviesListActivity::class
+    override fun getImplementingTypeClassName(): String {
+        return MoviesListActivity::class.java.simpleName
     }
 }

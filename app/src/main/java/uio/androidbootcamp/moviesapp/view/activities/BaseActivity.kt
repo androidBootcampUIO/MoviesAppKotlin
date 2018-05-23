@@ -8,15 +8,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.drawer_layout.*
 import uio.androidbootcamp.moviesapp.R
-import uio.androidbootcamp.moviesapp.R.id.action_find
-import uio.androidbootcamp.moviesapp.R.id.action_list
+import uio.androidbootcamp.moviesapp.R.id.*
 import uio.androidbootcamp.moviesapp.utils.ActivitiesNames
 import kotlin.reflect.KClass
 
-abstract class BaseActivity<T : AppCompatActivity> : AppCompatActivity() {
-
-    private val implementingClass: KClass<T>
-        get() = getImplementingTypeClass()
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +21,9 @@ abstract class BaseActivity<T : AppCompatActivity> : AppCompatActivity() {
         }
     }
 
-    abstract fun isDrawerEnabled(): Boolean
+    abstract fun getImplementingTypeClassName(): String
 
-    abstract fun getImplementingTypeClass(): KClass<T>
+    abstract fun isDrawerEnabled(): Boolean
 
     fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
@@ -60,13 +56,13 @@ abstract class BaseActivity<T : AppCompatActivity> : AppCompatActivity() {
             when (it.itemId) {
 
                 action_list -> {
-                    if (implementingClass.simpleName != ActivitiesNames.MOVIES_LIST_ACTIVITY.className) {
+                    if (getImplementingTypeClassName() != ActivitiesNames.MOVIES_LIST_ACTIVITY.className) {
                         intent = Intent(this, MoviesListActivity::class.java)
                         startActivity(intent)
                     }
                 }
                 action_find -> {
-                    if (implementingClass.simpleName != ActivitiesNames.FIND_MOVIES_ACTIVITY.className) {
+                    if (getImplementingTypeClassName() != ActivitiesNames.FIND_MOVIES_ACTIVITY.className) {
                         intent = Intent(this, FindMovieActivity::class.java)
                         startActivity(intent)
                     }
