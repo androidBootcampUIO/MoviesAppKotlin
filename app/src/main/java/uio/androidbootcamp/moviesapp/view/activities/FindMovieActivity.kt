@@ -1,6 +1,8 @@
 package uio.androidbootcamp.moviesapp.view.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_find_movie.*
 import uio.androidbootcamp.moviesapp.R
 import uio.androidbootcamp.moviesapp.model.models.Movie
@@ -9,7 +11,7 @@ import uio.androidbootcamp.moviesapp.presenter.View
 import uio.androidbootcamp.moviesapp.utils.toast
 import kotlin.reflect.KClass
 
-class FindMovieActivity : BaseActivity(), View {
+class FindMovieActivity : AppCompatActivity(), View {
     private val presenter = MoviePresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +27,21 @@ class FindMovieActivity : BaseActivity(), View {
         }
     }
 
+
     override fun showMovieInformation(movie: Movie?) {
-        toast(movie?.toString() ?: getString(R.string.movie_not_found))
+//        toast(movie?.toString() ?: getString(R.string.movie_not_found))
+
+        val intent = Intent(this, ShowMovieActivity::class.java).apply {
+            putExtra(EXTRA_MOVIE, movie)
+        }
+        startActivity(intent)
     }
 
-    override fun isDrawerEnabled(): Boolean {
-        return true
+    fun setActionBarTitle(title: String) {
+        supportActionBar?.title = title
     }
 
-    override fun getImplementingTypeClassName(): String {
-        return FindMovieActivity::class.java.simpleName
+    companion object {
+        const val EXTRA_MOVIE = "MOVIE"
     }
 }
