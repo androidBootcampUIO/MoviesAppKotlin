@@ -1,14 +1,29 @@
 package uio.androidbootcamp.moviesapp.model.models
 
-import java.io.*
-import java.util.Date
+import java.io.Serializable
 
-data class Movie(val id: Long = 0,
-                 val name: String,
-                 val posterPath: String,
-                 val overview: String,
-                 val releaseDate: Date = Date()) : Serializable {
-
-    constructor() : this(0, "", "", "", Date())
-
-}
+data class Movie(val Title: String,
+                 val Year: String,
+                 val Rated: String,
+                 val Released: String,
+                 val Runtime: String,
+                 val Genre: String,
+                 val Director: String,
+                 val Writer: String,
+                 val Actors: String,
+                 val Plot: String,
+                 val Language: String,
+                 val Country: String,
+                 val Awards: String,
+                 val Poster: String,
+                 val Ratings: List<Rating>,
+                 val Metascore: String,
+                 val imdbRating: String,
+                 val imdbVotes: String,
+                 val imdbID: String,
+                 val Type: String,
+                 val DVD: String,
+                 val BoxOffice: String,
+                 val Production: String,
+                 val Website: String,
+                 val Response: String) : Serializable
