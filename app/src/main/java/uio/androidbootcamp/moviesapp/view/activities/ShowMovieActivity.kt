@@ -20,8 +20,8 @@ class ShowMovieActivity : BaseActivity(), ShowMoviePresenter.View {
 
     override fun showMovieData(movie: Movie) {
         movie.let {
-            movieTitle.text = it.Title
-            movieDescription.text = it.Plot
+            movieTitle.text = it.title
+            movieDescription.text = it.plot
         }
     }
 

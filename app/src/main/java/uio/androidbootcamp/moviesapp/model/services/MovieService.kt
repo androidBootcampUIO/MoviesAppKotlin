@@ -1,5 +1,7 @@
 package uio.androidbootcamp.moviesapp.model.services
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,9 +14,10 @@ class MovieService(private val presenterOutput: MoviePresenterOutput) {
 
     fun findMovieByName(name: String) {
         val baseUrl = "http://www.omdbapi.com"
+        val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create()
         val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
         val movieApiService = retrofit.create(MovieApiService::class.java)
