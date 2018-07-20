@@ -12,32 +12,38 @@ import uio.androidbootcamp.moviesapp.model.models.Movie
 //Manejo de Servicios Web
 class MovieService(private val presenterOutput: MoviePresenterOutput) {
 
+    companion object {
+        var ApiKey: String = "cf1356ff"
+        var baseUrl = "http://www.omdbapi.com"
+    }
+
     fun findMovieByName(name: String) {
-        val baseUrl = "http://www.omdbapi.com"
+        if (name.isNotBlank()) {
+            val call = findMovieByNameCall(name)
+            call.enqueue(object : Callback<Movie> {
+                override fun onFailure(call: Call<Movie>?, t: Throwable?) {
+                    presenterOutput.showMovieInformation(null)
+                }
+                override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
+                    presenterOutput.showMovieInformation(response?.body())
+                }
+            })
+        }
+    }
+
+    private fun findMovieByNameCall(name: String): Call<Movie> {
+        val movieApiService = movieApiService()
+        return movieApiService.findMovieByTitle(ApiKey, name)
+    }
+
+    private fun movieApiService() : MovieApiService {
         val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create()
         val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
-        val movieApiService = retrofit.create(MovieApiService::class.java)
-
-        if (name.isNotBlank()) {
-            val apiKey = "" // insertar apiKey
-            val call = movieApiService.findMovieByTitle(apiKey, name)
-
-            call.enqueue(object : Callback<Movie> {
-                override fun onFailure(call: Call<Movie>?, t: Throwable?) {
-
-                    presenterOutput.showMovieInformation(null)
-                }
-
-                override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
-                    presenterOutput.showMovieInformation(response?.body())
-                }
-
-            })
-        }
+        return retrofit.create(MovieApiService::class.java)
     }
 }
 
