@@ -8,6 +8,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uio.androidbootcamp.moviesapp.model.models.Movie
+import uio.androidbootcamp.moviesapp.model.models.Movies
 
 //Manejo de Servicios Web
 class MovieService(private val presenterOutput: MoviePresenterOutput) {
@@ -31,9 +32,29 @@ class MovieService(private val presenterOutput: MoviePresenterOutput) {
         }
     }
 
+    fun findMoviesByKeyWord(keyword: String) {
+        if (keyword.isNotBlank()) {
+            val call = findMoviesBykeywordCall(keyword)
+            call.enqueue(object : Callback<Movies> {
+                override fun onFailure(call: Call<Movies>?, t: Throwable?) {
+
+                }
+
+                override fun onResponse(call: Call<Movies>?, response: Response<Movies>?) {
+                    presenterOutput.showMovieList(response?.body())
+                }
+            })
+        }
+    }
+
     private fun findMovieByNameCall(name: String): Call<Movie> {
         val movieApiService = movieApiService()
         return movieApiService.findMovieByTitle(ApiKey, name)
+    }
+
+    private fun findMoviesBykeywordCall(keyword: String): Call<Movies> {
+        val movieApiService = movieApiService()
+        return movieApiService.findMoviesByKeyWord(ApiKey, keyword)
     }
 
     private fun movieApiService() : MovieApiService {
@@ -49,4 +70,5 @@ class MovieService(private val presenterOutput: MoviePresenterOutput) {
 
 interface MoviePresenterOutput {
     fun showMovieInformation(movie: Movie?)
+    fun showMovieList(movieList: Movies?)
 }

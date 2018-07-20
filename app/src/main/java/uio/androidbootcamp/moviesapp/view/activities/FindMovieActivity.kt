@@ -5,6 +5,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_find_movie.*
 import uio.androidbootcamp.moviesapp.R
 import uio.androidbootcamp.moviesapp.model.models.Movie
+import uio.androidbootcamp.moviesapp.model.models.Movies
 import uio.androidbootcamp.moviesapp.presenter.MoviePresenter
 import uio.androidbootcamp.moviesapp.utils.toast
 
@@ -22,11 +23,21 @@ class FindMovieActivity : BaseActivity(), MoviePresenter.View {
         button_find_movie.setOnClickListener {
             presenter.findMovieByName(edit_text_movie_name.text.toString())
         }
+        button_movie_list.setOnClickListener {
+            presenter.findMovieListByKeyword(edit_text_movie_name.text.toString())
+        }
     }
 
     override fun showMovieInformation(movie: Movie) {
         val intent = Intent(this, ShowMovieActivity::class.java).apply {
             putExtra(EXTRA_MOVIE, movie)
+        }
+        startActivity(intent)
+    }
+
+    override fun showMovieList(movieList: Movies) {
+        val intent = Intent(this, ResultsListActivity::class.java).apply {
+            putExtra(EXTRA_MOVIES_LIST, movieList.search)
         }
         startActivity(intent)
     }
@@ -45,5 +56,6 @@ class FindMovieActivity : BaseActivity(), MoviePresenter.View {
 
     companion object {
         const val EXTRA_MOVIE = "MOVIE"
+        const val EXTRA_MOVIES_LIST = "MOVIES_LIST"
     }
 }
